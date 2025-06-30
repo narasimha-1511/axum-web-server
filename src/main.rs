@@ -71,12 +71,12 @@ async fn main() {
         .expect("Failed to parse PORT");
 
     // Bind to the specified port on all IPv6 interfaces
-    let address = SocketAddr::from(([0,0,0,0,0,0,0,0], port));
+    let address = SocketAddr::from(([0,0,0,0], port));
     let listener = tokio::net::TcpListener::bind(&address).await.unwrap();
 
     
-    println!("🚀 Server running on http://127.0.0.1:3000");
-    println!("📋 Available endpoints:");
+    println!("Server running!!");
+    println!("Available endpoints:");
     println!("  GET  /              - Welcome message");
     println!("  GET  /health        - Health check");
     println!("  POST /create-account - Create new Solana account");
@@ -137,7 +137,7 @@ async fn create_account() -> (StatusCode, Json<ApiResponse>) {
         StatusCode::CREATED,
         Json(ApiResponse {
             success: true,
-            message: "🔑 New Solana account created successfully!".to_string(),
+            message: "New Solana account created successfully!".to_string(),
             data: Some(serde_json::to_value(account_info).unwrap()),
         }),
     )
@@ -155,7 +155,7 @@ async fn request_airdrop(Query(params): Query<AirdropQuery>) -> (StatusCode, Jso
                 StatusCode::BAD_REQUEST,
                 Json(ApiResponse {
                     success: false,
-                    message: "❌ Invalid public key format".to_string(),
+                    message: "Invalid public key format".to_string(),
                     data: None,
                 }),
             );
@@ -192,7 +192,7 @@ async fn request_airdrop(Query(params): Query<AirdropQuery>) -> (StatusCode, Jso
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(ApiResponse {
                 success: false,
-                message: format!("❌ Airdrop failed: {}", e),
+                message: format!("Airdrop failed: {}", e),
                 data: None,
             }),
         ),
@@ -210,7 +210,7 @@ async fn get_balance(Query(params): Query<AirdropQuery>) -> (StatusCode, Json<Ap
                 StatusCode::BAD_REQUEST,
                 Json(ApiResponse {
                     success: false,
-                    message: "❌ Invalid public key format".to_string(),
+                    message: " Invalid public key format".to_string(),
                     data: None,
                 }),
             );
@@ -238,7 +238,7 @@ async fn get_balance(Query(params): Query<AirdropQuery>) -> (StatusCode, Json<Ap
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(ApiResponse {
                 success: false,
-                message: format!("❌ Failed to get balance: {}", e),
+                message: format!("Failed to get balance: {}", e),
                 data: None,
             }),
         ),
